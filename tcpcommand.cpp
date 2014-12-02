@@ -43,6 +43,8 @@ void TcpCommand::tcpCreate()
     const int CTTIME = 10;   //try connecting time
     qDebug()<<"tcp ip:"<<m_ip;
     qDebug()<<"tcp port:"<<m_port;
+    qDebug()<<"tcp freq:"<<m_freq;
+
     //1.abort tcp all connect
     this->abort();
     //2.connect host address
@@ -52,13 +54,14 @@ void TcpCommand::tcpCreate()
 void TcpCommand::tcpRead()
 {
     QByteArray qba = this->readAll();
-    qDebug()<<"[tcp thread:]"<<qba;
+    qDebug()<<"tcp read data:"<<qba;
 }
 
 //关闭命令
 void TcpCommand::tcpClose()
 {
     this->close();
+    qDebug()<<"tcp close";
 }
 
 

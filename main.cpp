@@ -52,6 +52,23 @@ int main(int argc, char *argv[])
     gTcp->moveToThread(gTcpThd);
     gTcpThd->start();
 
+    //=============== udp socket =====================
+    //udp receive and socket
+    gUdp = new UdpReceive();
+    gUdpThd = new QThread();
+
+    //window - udp port
+    QObject::connect(&w,SIGNAL(signCurUdpPort(quint32)),gUdp,SLOT(udpPort(quint32)));
+    //window - udp freq
+    QObject::connect(&w,SIGNAL(signCurFreq(quint32)),gUdp,SLOT(udpFreq(quint32)));
+    //window - udp open
+    QObject::connect(&w,SIGNAL(signUdpOpen()),gUdp,SLOT(udpOpen()));
+    //window - udp close
+    QObject::connect(&w,SIGNAL(signUdpClose()),gUdp,SLOT(udpClose()));
+
+
+    gUdp->moveToThread(gUdpThd);
+    gUdpThd->start();
 
 
 

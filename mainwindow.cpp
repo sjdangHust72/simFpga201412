@@ -55,15 +55,19 @@ void MainWindow::on_pbtn_connect_clicked()
         if(ui->actionFpga->isChecked())
         {//fpga
             emit signCurIp("128.0.43.43");
-            emit signCurTcpPort(4096);
         }
         else
         {//local
             emit signCurIp("127.0.0.1");
-            emit signCurTcpPort(4096);
         }
+        //设置port
+        emit signCurTcpPort(4096);
+        emit signCurUdpPort(4098);
+        emit signCurFreq(505);
         //tcp连接
         emit signTcpCreate();
+        //udp打开
+        emit signUdpOpen();
 
         //then,setting button and label
         ui->label_connect->setText("state:connecting");
@@ -72,6 +76,10 @@ void MainWindow::on_pbtn_connect_clicked()
     else if(ui->pbtn_connect->text() == "close")
     {//连接状态-->非连接状态
         //do something
+        //tcp close
+        emit signTcpClose();
+        //udp close
+        emit signUdpClose();
 
         //then,settting button and label
         ui->label_connect->setText("state:not connect");

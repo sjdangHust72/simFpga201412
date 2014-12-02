@@ -22,10 +22,9 @@ signals:
     void signCurFreq(quint32 freq);
     //当前连接的IP地址
     void signCurIp(QString str);
+    //===============================
     //当前TCP的port
     void signCurTcpPort(quint32 port);
-    //当前UDP的port
-    void signCurUdpPort(quint32 port);
     //tcp建立
     void signTcpCreate();
     //tcp启动
@@ -36,6 +35,14 @@ signals:
     void signTcpStop();
     //tcp关闭
     void signTcpClose();
+    //===============================
+    //当前UDP的port
+    void signCurUdpPort(quint32 port);
+    //udp open
+    void signUdpOpen();
+    //udp close
+    void signUdpClose();
+
 public slots:
     //发送messagebox
     void slotTcpMsg(QString);
