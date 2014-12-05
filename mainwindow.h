@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QThread>
+#include <QFile>
 #include "tcpcommand.h"
 #include "udpreceive.h"
 
@@ -44,14 +45,24 @@ signals:
     void signUdpClose();
 
 public slots:
-    //发送messagebox
-    void slotTcpMsg(QString);
-    void slotFpga();
-    void slotLocal();
     void on_pbtn_connect_clicked();
+
+    //tcp state
+    void slotStateChange(QAbstractSocket::SocketState id);
+    //tcp error
+    void slotErrorString(QAbstractSocket::SocketError);
+
+private slots:
+    void on_cb_record_toggled(bool checked);
+    void on_pbtn_start_clicked();
+    void on_pbtn_stop_clicked();
 
 private:
     Ui::MainWindow *ui;
+    double m_dFreqDot[74];
+
+    QString m_fileName;
+    QFile m_file;
 };
 
 #endif // MAINWINDOW_H

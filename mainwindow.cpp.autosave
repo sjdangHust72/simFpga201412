@@ -206,9 +206,12 @@ void MainWindow::on_cb_record_toggled(bool checked)
 void MainWindow::on_pbtn_start_clicked()
 {
     //开始按钮
+    //检查文件
+    
+    //发送freq
     int idxFreq = ui->comboBox_freqSetting->currentIndex();
     emit signCurFreq((quint32)(m_dFreqDot[idxFreq] * 10));
-    qDebug()<<m_dFreqDot[idxFreq];
+    qDebug()<<"emit freq :"<<m_dFreqDot[idxFreq];
 }
 
 void MainWindow::on_pbtn_stop_clicked()

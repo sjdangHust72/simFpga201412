@@ -17,10 +17,10 @@
    <widget class="QLabel" name="label_connect">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>610</x>
       <y>10</y>
-      <width>141</width>
-      <height>21</height>
+      <width>101</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -30,15 +30,177 @@
    <widget class="QPushButton" name="pbtn_connect">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>720</x>
       <y>30</y>
-      <width>131</width>
-      <height>23</height>
+      <width>75</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
      <string>connect</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>160</y>
+      <width>165</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>次数</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_colTimes"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="pbtn_stop">
+    <property name="geometry">
+     <rect>
+      <x>639</x>
+      <y>199</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>停止</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbtn_start">
+    <property name="geometry">
+     <rect>
+      <x>549</x>
+      <y>199</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>开始</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>549</x>
+      <y>159</y>
+      <width>101</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>频率</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_freqSetting"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>549</x>
+      <y>29</y>
+      <width>161</width>
+      <height>76</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>IP:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>TCP PORT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>UDP PORT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_ipAddr"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_tcpPort"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_udpPort"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>10</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>State:</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>551</x>
+      <y>121</y>
+      <width>242</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="cb_record">
+       <property name="text">
+        <string>录制</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>保存到：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_ipInfo"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -63,27 +225,9 @@
     <property name="title">
      <string>开始</string>
     </property>
-    <addaction name="actionFpga"/>
-    <addaction name="actionLocal"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <action name="actionFpga">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>fpga</string>
-   </property>
-  </action>
-  <action name="actionLocal">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>local</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tcpcommand.cpp \
-    udpreceive.cpp
+    udpreceive.cpp \
+    package.cpp
 
 HEADERS  += mainwindow.h \
     tcpcommand.h \
-    udpreceive.h
+    udpreceive.h \
+    package.h
 
 FORMS    += mainwindow.ui

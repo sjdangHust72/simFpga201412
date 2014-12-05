@@ -16,9 +16,14 @@ TcpCommand *gTcp;
 UdpReceive *gUdp;
 
 
+Q_DECLARE_METATYPE(QAbstractSocket::SocketState)
+Q_DECLARE_METATYPE(QAbstractSocket::SocketError)
+
 
 int main(int argc, char *argv[])
 {
+
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
@@ -45,9 +50,13 @@ int main(int argc, char *argv[])
     //window - tcp关闭
     QObject::connect(&w,SIGNAL(signTcpClose()),gTcp,SLOT(tcpClose()));
 
-    //window - tcp error
-    QObject::connect(gTcp,SIGNAL(signTcpError(QString)),&w,SLOT(slotTcpMsg(QString)));
+    //window - tcp socketState
+    qRegisterMetaType<QAbstractSocket::SocketState>("SocketState");
+    QObject::connect(gTcp,SIGNAL(stateChanged(QAbstractSocket::SocketState)),&w,SLOT(slotStateChange(QAbstractSocket::SocketState)));
 
+    //window - tcp errorString
+    qRegisterMetaType <QAbstractSocket::SocketError>("SocketError");
+    QObject::connect(gTcp,SIGNAL(error(QAbstractSocket::SocketError)),&w,SLOT(slotErrorString(QAbstractSocket::SocketError)));
 
     gTcp->moveToThread(gTcpThd);
     gTcpThd->start();

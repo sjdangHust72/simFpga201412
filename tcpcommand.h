@@ -34,8 +34,6 @@ public slots:
     //设置当前频点
     void tcpFreq(quint32 freq);
 
-    void displayError(QAbstractSocket::SocketError);
-
 private:
     char m_startCmd[12];
     char m_backCmd[12];

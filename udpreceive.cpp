@@ -10,19 +10,17 @@ UdpReceive::UdpReceive(QObject *parent) :
 void UdpReceive::udpPort(quint32 port)
 {
     m_port = port;
-
+    qDebug()<<"udp port:"<<m_port;
 }
 //udp current freq
 void UdpReceive::udpFreq(quint32 freq)
 {
     m_freq = freq;
+    qDebug()<<"udp freq:"<<m_freq;
 }
 //udp open
 void UdpReceive::udpOpen()
 {
-    qDebug()<<"udp port:"<<m_port;
-    qDebug()<<"udp freq:"<<m_freq;
-
     this->bind(m_port,QUdpSocket::DontShareAddress);
     qDebug()<<"udp open";
 }

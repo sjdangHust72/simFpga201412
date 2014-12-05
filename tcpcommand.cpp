@@ -18,37 +18,37 @@ TcpCommand::TcpCommand(QObject *parent) :
     for(int i=0;i<12;i++)
         m_stopCmd[i] = Stop[i];
 
+    //tcp data receive: readyRead() <-> tcpRead()
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(tcpRead()));
-    QObject::connect(this,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(displayError(QAbstractSocket::SocketError)));
 }
+
 //ip address
 void TcpCommand::tcpIp(QString ip)
 {
     m_ip = ip;
+    qDebug()<<"tcp ip:"<<m_ip;
 }
 // port
 void TcpCommand::tcpPort(quint32 port)
 {
     m_port = port;
+    qDebug()<<"tcp port:"<<m_port;
 }
 //current freq
 void TcpCommand::tcpFreq(quint32 freq)
 {
     m_freq = freq;
+    qDebug()<<"tcp freq:"<<m_freq;
 }
 
 void TcpCommand::tcpCreate()
 {
-    const int DYTIME = 10000;//delay time
-    const int CTTIME = 10;   //try connecting time
-    qDebug()<<"tcp ip:"<<m_ip;
-    qDebug()<<"tcp port:"<<m_port;
-    qDebug()<<"tcp freq:"<<m_freq;
-
     //1.abort tcp all connect
     this->abort();
     //2.connect host address
     this->connectToHost(QHostAddress(this->m_ip),this->m_port);
+
+    qDebug()<<"tcp create";
 }
 
 void TcpCommand::tcpRead()
@@ -89,8 +89,9 @@ void TcpCommand::tcpCmdStop()
     qDebug("stopCmd:%s",m_stopCmd);
 }
 
-void TcpCommand::displayError(QAbstractSocket::SocketError)
-{
-    qDebug() << this->errorString(); //输出错误信息
-    emit signTcpError(this->errorString());
-}
+
+
+
+
+
+
