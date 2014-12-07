@@ -1,8 +1,9 @@
 #include "tcpcommand.h"
-
+#include <QThread>
 TcpCommand::TcpCommand(QObject *parent) :
     QTcpSocket(parent)
 {
+
     // 22启动命令 6020  0.1M        1000ms
     quint8 Start[12]   =   {0X5A,0XA5,0X5B,0XB5,0X22,0X00,0X17,0X84,0X17,0X84,0X03,0XE8};
     for(int i=0;i<12;i++)
@@ -49,6 +50,7 @@ void TcpCommand::tcpCreate()
     this->connectToHost(QHostAddress(this->m_ip),this->m_port);
 
     qDebug()<<"tcp create";
+    qDebug()<<"tcp thread id："<<QThread::currentThreadId()<<endl;
 }
 
 void TcpCommand::tcpRead()
@@ -74,6 +76,7 @@ void TcpCommand::tcpCmdStart()
     m_startCmd[7] = m_startCmd[9] = (m_freq)%256;
     //发送命令
     this->write(m_startCmd,12);
+    qDebug("startCmd:%s",m_startCmd);
 }
 //回传命令
 void TcpCommand::tcpCmdBack()

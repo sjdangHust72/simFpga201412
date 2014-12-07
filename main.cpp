@@ -3,17 +3,22 @@
 
 
 
+
 //thread:
-//
 QThread *gUdpThd;
 QThread *gTcpThd;
 
+
 //TCP command
-//
 TcpCommand *gTcp;
+
 //UDP receive
-//
 UdpReceive *gUdp;
+
+//Package the socket source data,
+//this function class is in Udp thread.
+Package *gPkg;
+
 
 
 Q_DECLARE_METATYPE(QAbstractSocket::SocketState)
@@ -64,7 +69,12 @@ int main(int argc, char *argv[])
     //=============== udp socket =====================
     //udp receive and socket
     gUdp = new UdpReceive();
+    gPkg = new Package();
+
     gUdpThd = new QThread();
+
+    qRegisterMetaType <QPackage>("QPackage");
+    qRegisterMetaType <QFrameData>("QFrameData");
 
     //window - udp port
     QObject::connect(&w,SIGNAL(signCurUdpPort(quint32)),gUdp,SLOT(udpPort(quint32)));
@@ -75,9 +85,16 @@ int main(int argc, char *argv[])
     //window - udp close
     QObject::connect(&w,SIGNAL(signUdpClose()),gUdp,SLOT(udpClose()));
 
+    //udp - package: srcdata --> standard data
+    QObject::connect(gUdp,SIGNAL(signUdpSrcData(QByteArray)),gPkg,SLOT(slotPkgRevSrcData(QByteArray)));
+
+
+
 
     gUdp->moveToThread(gUdpThd);
+    gPkg->moveToThread(gUdpThd);
     gUdpThd->start();
+
 
 
 

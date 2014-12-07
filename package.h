@@ -2,40 +2,31 @@
 #define PACKAGE_H
 
 #include <QObject>
-
+#include "qpackage.h"
+#include "qframedata.h"
 
 class Package : public QObject
 {
     Q_OBJECT
 public:
     explicit Package(QObject *parent = 0);
-    Package(QByteArray &datagram);
 
 signals:
-
+    void signPkgData(QPackage);
+    void signPkgFrameData(QFrameData);
 public slots:
-    quint16 getStartPoint()const {return sp;}
-    quint16 getEndPoint()const {return ep;}
-    quint16 getFreqLen()const {return len;}
-    quint16 getPackageGrp()const{return packgrp;}
-    quint16 getNumInPackage()const{return numInpack;}
-    quint16 getRevFreq()const {return recFreq;}
-    quint32 *getDataAddr(){return data;}
-private:
-    quint16 head;
-    quint16 sp; //start point in 65536
-    quint16 ep; //end poin in 65536
-    quint16 len;//len of freq in 65536
-    quint16 packgrp;//the group number
-    quint16 numInpack;//the number(1-38)
-    quint16 recFreq;//receive freq,unit is 100k
-    quint32 data[252];
+    void slotPkgRevSrcData(QByteArray);
 
-    struct package{
-        quint16 head[8];
-        quint32 data[252];
-    };
-    package *pkg;
+private slots:
+    void slotDoFrame(QPackage);
+    void slottest(QPackage);
+
+private:
+    bool isRcd;
+    QFrameData fm;
+
+    quint32 last_index;
+    quint32 last_freq;
 };
 
 #endif // PACKAGE_H

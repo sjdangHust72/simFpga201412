@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    qDebug()<<"main thread id:"<<QThread::currentThreadId();
     //init label_connect
     ui->label_connect->setText("-*-*-*-");
 
@@ -206,13 +206,30 @@ void MainWindow::on_cb_record_toggled(bool checked)
 void MainWindow::on_pbtn_start_clicked()
 {
     //开始按钮
+    //检查文件
+    if(m_fileName == "")
+    {
+        QMessageBox::information(this, "Error", "set current file name", QMessageBox::Ok , QMessageBox::Ok);
+        return ;
+    }
+    //发送freq
     int idxFreq = ui->comboBox_freqSetting->currentIndex();
     emit signCurFreq((quint32)(m_dFreqDot[idxFreq] * 10));
-    qDebug()<<m_dFreqDot[idxFreq];
+    qDebug()<<"emit freq :"<<m_dFreqDot[idxFreq];
+
+    //启动tcp
+    emit signTcpStart();
+    emit signTcpBack();
+
+    //保存文件线程
+
 }
 
 void MainWindow::on_pbtn_stop_clicked()
 {
     //停止按钮
+    //停止tcp
+    emit signTcpStop();
 
+    //保存文件
 }

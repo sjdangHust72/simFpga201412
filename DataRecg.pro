@@ -16,11 +16,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tcpcommand.cpp \
     udpreceive.cpp \
-    package.cpp
+    qpackage.cpp \
+    package.cpp \
+    qframedata.cpp
+
+
 
 HEADERS  += mainwindow.h \
     tcpcommand.h \
     udpreceive.h \
-    package.h
+    qpackage.h \
+    package.h \
+    qframedata.h
+
+
 
 FORMS    += mainwindow.ui

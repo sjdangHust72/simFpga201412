@@ -4,8 +4,13 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QFile>
+
 #include "tcpcommand.h"
 #include "udpreceive.h"
+
+#include "qpackage.h"
+#include "package.h"
+#include "qframedata.h"
 
 namespace Ui {
 class MainWindow;

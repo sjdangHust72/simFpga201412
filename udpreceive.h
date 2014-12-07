@@ -4,11 +4,17 @@
 #include <QUdpSocket>
 #include <QDebug>
 
+
 class UdpReceive : public QUdpSocket
 {
     Q_OBJECT
 public:
     explicit UdpReceive(QObject *parent = 0);
+
+signals:
+
+    void signUdpSrcData(QByteArray);
+
 
 public slots:
     //udp port
@@ -25,7 +31,7 @@ public slots:
 
 private:
     quint32 m_port;
-    quint32 m_freq;
+    quint32 m_freq;  
 
 };
 

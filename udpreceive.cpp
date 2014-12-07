@@ -1,9 +1,11 @@
 #include "udpreceive.h"
+#include <QThread>
 
 UdpReceive::UdpReceive(QObject *parent) :
     QUdpSocket(parent)
 {
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(readData()));
+
 }
 
 //udp port
@@ -33,6 +35,7 @@ void UdpReceive::udpClose()
 //udp read data
 void UdpReceive::readData()
 {
+    //static quint32 cnt = 0;
     while (hasPendingDatagrams())
     {
         QByteArray datagram;
@@ -41,8 +44,11 @@ void UdpReceive::readData()
             datagram.resize(1024);
             readDatagram(datagram.data(),1024);
 
-                // emit signal to parseThread
-                //emit readyDataParse1K(datagram,m_curFreq);
+            //发送原始1k数据
+            emit signUdpSrcData(datagram);
+            //qDebug()<<"udp thread id:"<<QThread::currentThreadId();
+            //qDebug()<<"udp read data"<<cnt;
+            //cnt++;
         }
         else
         {
@@ -50,5 +56,5 @@ void UdpReceive::readData()
             readDatagram(datagram.data(), datagram.size());
         }
     }
-    qDebug()<<"udp read data";
+
 }
