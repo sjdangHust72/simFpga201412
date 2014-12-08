@@ -18,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_connect->setText("-*-*-*-");
 
     //ip设置
-    ui->lineEdit_ipAddr->setText(tr("127.0.0.1"));
+    //ui->lineEdit_ipAddr->setText(tr("127.0.0.1"));
+    ui->lineEdit_ipAddr->setText(tr("128.0.43.204"));
     ui->lineEdit_tcpPort->setText("4096");
     ui->lineEdit_udpPort->setText("4098");
 
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     //次数
-    ui->lineEdit_colTimes->setText("10");
+    ui->lineEdit_colTimes->setText("0");
 
     //开始按钮
     ui->pbtn_start->setDisabled(true);
@@ -98,9 +99,7 @@ void MainWindow::slotStateChange(QAbstractSocket::SocketState id)
         ui->pbtn_connect->setText("close");
         ui->pbtn_connect->setDisabled(false);
 
-        //ui 【开始】 和 【停止】 按钮使能
-        ui->pbtn_start->setDisabled(false);
-        ui->pbtn_stop->setDisabled(false);
+
     }
     else if(id == QAbstractSocket::BoundState)
     {
@@ -130,6 +129,14 @@ void MainWindow::slotErrorString(QAbstractSocket::SocketError)
     QMessageBox::information(this, "Error", gTcp->errorString(), QMessageBox::Ok , QMessageBox::Ok);
 }
 
+//文件写了多少次
+void MainWindow::slotFileWriteTime(quint32 cnt)
+{
+
+
+    ui->lineEdit_colTimes->setText(QString::number(cnt,10));
+}
+
 
 
 void MainWindow::on_pbtn_connect_clicked()
@@ -154,8 +161,6 @@ void MainWindow::on_pbtn_connect_clicked()
 
         //tcp连接
         emit signTcpCreate();
-        //udp打开
-        emit signUdpOpen();
 
         //ui connect disable
         ui->pbtn_connect->setDisabled(true);
@@ -164,8 +169,7 @@ void MainWindow::on_pbtn_connect_clicked()
     {//连接状态-->非连接状态
         //tcp close
         emit signTcpClose();
-        //udp close
-        emit signUdpClose();
+
 
         //ui connect disable
         ui->pbtn_connect->setDisabled(true);
@@ -204,6 +208,10 @@ void MainWindow::on_cb_record_toggled(bool checked)
 
         //发送文件名
         emit signFileName(m_fileName);
+
+        //ui 【开始】 和 【停止】 按钮使能
+        ui->pbtn_start->setDisabled(false);
+        //ui->pbtn_stop->setDisabled(false);
     }
 }
 
@@ -225,19 +233,23 @@ void MainWindow::on_pbtn_start_clicked()
     emit signTcpStart();
     emit signTcpBack();
 
-    //保存文件线程
-    emit signFileThdStart();
-    gFileThd->start();
+    emit signFileOpen();
+    //udp打开
+    emit signUdpOpen();
+
+    ui->pbtn_start->setDisabled(true);
+    ui->pbtn_stop->setDisabled(false);
+
 }
 
 void MainWindow::on_pbtn_stop_clicked()
 {
     //停止按钮
-    //停止tcp
     emit signTcpStop();
+    emit signFileClose();
+    //udp close
+    emit signUdpClose();
 
-    emit signFileThdStop();
-    //保存文件
-    gFileThd->quit();
-    gFileThd->wait();
+    ui->pbtn_start->setDisabled(false);
+    ui->pbtn_stop->setDisabled(true);
 }

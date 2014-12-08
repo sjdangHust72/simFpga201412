@@ -91,15 +91,19 @@ int main(int argc, char *argv[])
     gFile = new FileSave();
     gFileThd = new QThread();
 
-    //QObject::connect(gPkg,SIGNAL(signPkgFrameData(QFrameData)),gFile,SLOT(slotFileRevFrame(QFrameData)));
-    QObject::connect(&w,SIGNAL(signFileName(QString)),gFile,SLOT(slotFileRevFileName(QString)));
+    //udp - file
     QObject::connect(gUdp,SIGNAL(signUdpSrcData(QByteArray)),gFile,SLOT(slotFileRevSrcData(QByteArray)));
 
-    QObject::connect(&w,SIGNAL(signFileThdStop()),gFile,SLOT(slotFileThdStop()));
-    QObject::connect(&w,SIGNAL(signFileThdStart()),gFile,SLOT(slotFileThdStart()));
+    //file name
+    QObject::connect(&w,SIGNAL(signFileName(QString)),gFile,SLOT(slotFileRevFileName(QString)));
 
+    QObject::connect(&w,SIGNAL(signFileClose()),gFile,SLOT(slotFileClose()));
+    QObject::connect(&w,SIGNAL(signFileOpen()),gFile,SLOT(slotFileOpen()));
+
+    QObject::connect(gFile,SIGNAL(signFileWriteTime(quint32)),&w,SLOT(slotFileWriteTime(quint32)));
     gFile->moveToThread(gFileThd);
-    //gFileThd->start();
+    gFileThd->start();
+
 
 
     return a.exec();

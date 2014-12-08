@@ -23,6 +23,12 @@ TcpCommand::TcpCommand(QObject *parent) :
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(tcpRead()));
 }
 
+TcpCommand::~TcpCommand()
+{
+    tcpCmdStop();
+    tcpClose();
+}
+
 //ip address
 void TcpCommand::tcpIp(QString ip)
 {
@@ -50,13 +56,13 @@ void TcpCommand::tcpCreate()
     this->connectToHost(QHostAddress(this->m_ip),this->m_port);
 
     qDebug()<<"tcp create";
-    qDebug()<<"tcp thread id："<<QThread::currentThreadId()<<endl;
+    qDebug()<<"tcp thread id:"<<QThread::currentThreadId()<<endl;
 }
 
 void TcpCommand::tcpRead()
 {
     QByteArray qba = this->readAll();
-    qDebug()<<"tcp read data:"<<qba;
+    qDebug()<<hex<<"tcp read data:"<<qba;
 }
 
 //关闭命令
@@ -76,20 +82,26 @@ void TcpCommand::tcpCmdStart()
     m_startCmd[7] = m_startCmd[9] = (m_freq)%256;
     //发送命令
     this->write(m_startCmd,12);
-    qDebug("startCmd:%s",m_startCmd);
+    this->flush();
+    this->waitForBytesWritten(1000);
+    qDebug("startCmd");
 }
 //回传命令
 void TcpCommand::tcpCmdBack()
 {
     this->write(m_backCmd,12);
-    qDebug("backCmd:%s",m_backCmd);
+    this->flush();
+    this->waitForBytesWritten(1000);
+    qDebug("backCmd");
 }
 
 //停止命令
 void TcpCommand::tcpCmdStop()
 {
     this->write(m_stopCmd,12);
-    qDebug("stopCmd:%s",m_stopCmd);
+    this->flush();
+    this->waitForBytesWritten(1000);
+    qDebug("stopCmd");
 }
 
 

@@ -10,7 +10,7 @@ class TcpCommand : public QTcpSocket
     Q_OBJECT
 public:
     explicit TcpCommand(QObject *parent = 0);
-
+    ~TcpCommand();
 signals:
     void signTcpError(QString);
 

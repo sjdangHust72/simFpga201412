@@ -10,7 +10,7 @@ class UdpReceive : public QUdpSocket
     Q_OBJECT
 public:
     explicit UdpReceive(QObject *parent = 0);
-
+    ~UdpReceive();
 signals:
 
     void signUdpSrcData(QByteArray);

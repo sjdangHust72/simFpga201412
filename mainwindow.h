@@ -52,6 +52,9 @@ signals:
     void signFileName(QString);
     void signFileThdStart();
     void signFileThdStop();
+
+    void signFileOpen();
+    void signFileClose();
 public slots:
     void on_pbtn_connect_clicked();
 
@@ -60,6 +63,7 @@ public slots:
     //tcp error
     void slotErrorString(QAbstractSocket::SocketError);
 
+    void slotFileWriteTime(quint32);
 private slots:
     void on_cb_record_toggled(bool checked);
     void on_pbtn_start_clicked();
@@ -71,6 +75,7 @@ private:
 
     QString m_fileName;
     QFile m_file;
+
 };
 
 #endif // MAINWINDOW_H
