@@ -19,7 +19,7 @@ public slots:
 
 private slots:
     void slotDoFrame(QPackage);
-    void slottest(QPackage);
+
 
 private:
     bool isRcd;

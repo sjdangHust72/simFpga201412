@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     udpreceive.cpp \
     qpackage.cpp \
     package.cpp \
-    qframedata.cpp
+    qframedata.cpp \
+    filesave.cpp
 
 
 
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     udpreceive.h \
     qpackage.h \
     package.h \
-    qframedata.h
+    qframedata.h \
+    filesave.h
 
 
 

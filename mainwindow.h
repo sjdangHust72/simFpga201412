@@ -11,6 +11,8 @@
 #include "qpackage.h"
 #include "package.h"
 #include "qframedata.h"
+#include "filesave.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -49,6 +51,10 @@ signals:
     //udp close
     void signUdpClose();
 
+    //发送文件
+    void signFileName(QString);
+    void signFileThdStart();
+    void signFileThdStop();
 public slots:
     void on_pbtn_connect_clicked();
 

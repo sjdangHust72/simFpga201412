@@ -6,6 +6,7 @@
 
 
 extern TcpCommand *gTcp;
+extern QThread *gFileThd;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -200,6 +201,9 @@ void MainWindow::on_cb_record_toggled(bool checked)
         }
         m_file->close();
         ui->lineEdit_ipInfo->setText(m_fileName);
+
+        //发送文件名
+        emit signFileName(m_fileName);
     }
 }
 
@@ -222,7 +226,8 @@ void MainWindow::on_pbtn_start_clicked()
     emit signTcpBack();
 
     //保存文件线程
-
+    emit signFileThdStart();
+    gFileThd->start();
 }
 
 void MainWindow::on_pbtn_stop_clicked()
@@ -231,5 +236,8 @@ void MainWindow::on_pbtn_stop_clicked()
     //停止tcp
     emit signTcpStop();
 
+    emit signFileThdStop();
     //保存文件
+    gFileThd->quit();
+    gFileThd->wait();
 }

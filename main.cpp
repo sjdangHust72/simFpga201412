@@ -7,7 +7,7 @@
 //thread:
 QThread *gUdpThd;
 QThread *gTcpThd;
-
+QThread *gFileThd;
 
 //TCP command
 TcpCommand *gTcp;
@@ -17,7 +17,8 @@ UdpReceive *gUdp;
 
 //Package the socket source data,
 //this function class is in Udp thread.
-Package *gPkg;
+//Package *gPkg;
+FileSave *gFile;
 
 
 
@@ -68,13 +69,17 @@ int main(int argc, char *argv[])
 
     //=============== udp socket =====================
     //udp receive and socket
+    //1.完成了udp的数据接收（1k）
+    //2.完成了1k原始数据的去包头，留数据
+    //3.完成了38k数据组帧，通过信号slotDoFrame发送 9364个数据。
+
     gUdp = new UdpReceive();
-    gPkg = new Package();
+    //gPkg = new Package();
 
     gUdpThd = new QThread();
 
-    qRegisterMetaType <QPackage>("QPackage");
-    qRegisterMetaType <QFrameData>("QFrameData");
+    //qRegisterMetaType <QPackage>("QPackage");
+    //qRegisterMetaType <QFrameData>("QFrameData");
 
     //window - udp port
     QObject::connect(&w,SIGNAL(signCurUdpPort(quint32)),gUdp,SLOT(udpPort(quint32)));
@@ -86,14 +91,27 @@ int main(int argc, char *argv[])
     QObject::connect(&w,SIGNAL(signUdpClose()),gUdp,SLOT(udpClose()));
 
     //udp - package: srcdata --> standard data
-    QObject::connect(gUdp,SIGNAL(signUdpSrcData(QByteArray)),gPkg,SLOT(slotPkgRevSrcData(QByteArray)));
-
-
-
+    //QObject::connect(gUdp,SIGNAL(signUdpSrcData(QByteArray)),gPkg,SLOT(slotPkgRevSrcData(QByteArray)));
 
     gUdp->moveToThread(gUdpThd);
-    gPkg->moveToThread(gUdpThd);
+    //gPkg->moveToThread(gUdpThd);
     gUdpThd->start();
+
+    //=============== file save =====================
+    gFile = new FileSave();
+    gFileThd = new QThread();
+
+    //QObject::connect(gPkg,SIGNAL(signPkgFrameData(QFrameData)),gFile,SLOT(slotFileRevFrame(QFrameData)));
+    QObject::connect(&w,SIGNAL(signFileName(QString)),gFile,SLOT(slotFileRevFileName(QString)));
+    QObject::connect(gUdp,SIGNAL(signUdpSrcData(QByteArray)),gFile,SLOT(slotFileRevSrcData(QByteArray)));
+
+    QObject::connect(&w,SIGNAL(signFileThdStop()),gFile,SLOT(slotFileThdStop()));
+    QObject::connect(&w,SIGNAL(signFileThdStart()),gFile,SLOT(slotFileThdStart()));
+
+    gFile->moveToThread(gFileThd);
+    //gFileThd->start();
+
+
 
 
 

@@ -21,6 +21,7 @@ public:
 
     const quint16 *getHeadAddr()const{return head;}
     const quint32 *getDataAddr()const{return data;}
+    const char* getDataRawAddr()const{return (char*)data;}
 
     quint32 getCurIdx()const{return idx;}
     void pushBack(QPackage);
