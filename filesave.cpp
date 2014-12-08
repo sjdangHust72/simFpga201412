@@ -9,18 +9,6 @@ FileSave::FileSave(QObject *parent) :
     idx=0;
 }
 
-void FileSave::slotFileRevFrame(QFrameData fm)
-{
-    QFile file(m_fileName);
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Append))
-    {
-        return ;
-    }
-    QDataStream stm(&file);
-    stm.writeRawData(fm.getDataRawAddr(),sizeof(quint32)*9364);
-
-    file.close();
-}
 
 void FileSave::slotFileRevFileName(QString s)
 {

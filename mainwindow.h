@@ -8,9 +8,6 @@
 #include "tcpcommand.h"
 #include "udpreceive.h"
 
-#include "qpackage.h"
-#include "package.h"
-#include "qframedata.h"
 #include "filesave.h"
 
 

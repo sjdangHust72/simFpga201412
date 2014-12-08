@@ -16,9 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tcpcommand.cpp \
     udpreceive.cpp \
-    qpackage.cpp \
-    package.cpp \
-    qframedata.cpp \
     filesave.cpp
 
 
@@ -26,9 +23,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     tcpcommand.h \
     udpreceive.h \
-    qpackage.h \
-    package.h \
-    qframedata.h \
     filesave.h
 
 

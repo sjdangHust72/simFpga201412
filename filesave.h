@@ -2,7 +2,6 @@
 #define FILESAVE_H
 
 #include <QObject>
-#include "qframedata.h"
 class FileSave : public QObject
 {
     Q_OBJECT
@@ -12,7 +11,7 @@ public:
 signals:
 
 public slots:
-    void slotFileRevFrame(QFrameData);
+
     void slotFileRevFileName(QString);
     void slotFileRevSrcData(QByteArray);
     void slotFileThdStop();
